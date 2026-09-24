@@ -17,12 +17,12 @@ const store = {
 };
 
 const DEFAULT_CATEGORIES = [
-  { id: 'c1', name: 'Stammkunde', color: '#2e7d32' },
-  { id: 'c2', name: 'Neukunde', color: '#1565c0' },
-  { id: 'c3', name: 'Wichtig', color: '#c62828' },
-  { id: 'c4', name: 'Konzertflügel', color: '#6a1b9a' },
+  { id: 'c1', name: 'Stammkunde', color: '#3f6b4f' },
+  { id: 'c2', name: 'Neukunde', color: '#3b5f8a' },
+  { id: 'c3', name: 'Wichtig', color: '#a3291f' },
+  { id: 'c4', name: 'Konzertflügel', color: '#6b4a7a' },
 ];
-const NO_CATEGORY_COLOR = '#9e9e9e';
+const NO_CATEGORY_COLOR = '#b5b2ac';
 
 const state = {
   contacts: store.get('contacts', []),
@@ -152,7 +152,7 @@ function renderList() {
   document.querySelectorAll('#sortTabs button').forEach((b) => b.classList.toggle('active', b.dataset.sort === state.prefs.sort));
   const el = $('#list');
   if (!state.contacts.length) {
-    el.innerHTML = `<div class="empty">Noch keine Kunden.<br><button data-goto="settings" class="primary">Kontakte importieren</button></div>`;
+    el.innerHTML = `<div class="empty"><span class="logo"></span>Noch keine Kunden erfasst.<br><button data-goto="settings" class="primary">Kontakte importieren</button></div>`;
     return;
   }
   const sort = SORTS[state.prefs.sort] || SORTS.name;
@@ -251,7 +251,7 @@ function renderMap() {
     const due = ns ? dueLabel(ns, now) : null;
     const m = L.circleMarker([g.lat, g.lon], {
       radius: 9,
-      color: due && (due.level === 'overdue' || due.level === 'now') ? '#000' : '#fff',
+      color: due && (due.level === 'overdue' || due.level === 'now') ? '#111' : '#fff',
       weight: due && (due.level === 'overdue' || due.level === 'now') ? 3 : 2,
       fillColor: colorOf(c),
       fillOpacity: 0.95,

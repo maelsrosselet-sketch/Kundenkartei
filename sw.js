@@ -1,6 +1,8 @@
 // Offline-Fähigkeit: App-Dateien werden zwischengespeichert, aber immer zuerst frisch geladen.
-const CACHE = 'kundenkartei-v1';
-const SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'lib.js', 'manifest.webmanifest', 'icon.svg'];
+const CACHE = 'kundenkartei-v2';
+const SHELL = ['./', 'index.html', 'styles.css', 'app.js', 'lib.js', 'manifest.webmanifest', 'icon.svg', 'piano.svg', 'icon-192.png', 'apple-touch-icon.png',
+  'fonts/baskervville-latin-400-normal.woff2', 'fonts/baskervville-latin-400-italic.woff2',
+  'fonts/baskervville-latin-600-normal.woff2', 'fonts/baskervville-latin-700-normal.woff2'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

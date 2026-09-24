@@ -3,20 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#1f4e79">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Kundenkartei">
-  <title>Kundenkartei</title>
+  <title>Kundenkartei · Piano Atelier</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preload" href="fonts/baskervville-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <h1>Kundenkartei</h1>
-    <input id="search" type="search" placeholder="Suchen (Name, Ort, Telefon …)" autocomplete="off">
+    <div class="brand">
+      <span class="logo" role="img" aria-label="Flügel mit Katze"></span>
+      <div class="wordmark">
+        <b>Piano Atelier</b>
+        <span>François Rosselet</span>
+      </div>
+    </div>
+    <input id="search" type="search" placeholder="Kunden suchen …" autocomplete="off">
   </header>
 
   <div id="colorFilter" class="chips" aria-label="Nach Farbe filtern"></div>
@@ -123,10 +131,14 @@
   </main>
 
   <nav class="tabbar" id="tabbar">
-    <button data-view="list" class="active"><span>👥</span>Kunden</button>
-    <button data-view="due"><span>🎹</span>Stimmung</button>
-    <button data-view="map"><span>🗺️</span>Karte</button>
-    <button data-view="settings"><span>⚙️</span>Import</button>
+    <button data-view="list" class="active">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"/><path d="M15.5 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c2 .7 3.2 2.5 3.5 5.2"/></svg>Kunden</button>
+    <button data-view="due">
+      <svg viewBox="0 0 24 24"><path d="M9 2.5v8a3 3 0 0 0 6 0v-8"/><path d="M12 13.5V21.5"/><path d="M10 21.5h4"/></svg>Stimmung</button>
+    <button data-view="map">
+      <svg viewBox="0 0 24 24"><path d="M12 21.5s-6.5-6.2-6.5-11.5a6.5 6.5 0 0 1 13 0c0 5.3-6.5 11.5-6.5 11.5z"/><circle cx="12" cy="10" r="2.3"/></svg>Karte</button>
+    <button data-view="settings">
+      <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10.5l5 5 5-5"/><path d="M4 16.5v3h16v-3"/></svg>Import</button>
   </nav>
 
   <dialog id="detail"></dialog>

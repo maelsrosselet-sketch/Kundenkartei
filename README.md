@@ -1,4 +1,4 @@
-# Kundenkartei
+# Kundenkartei · Piano Atelier
 
 Webapp (PWA) zur Kundenorganisation auf Basis der Gerätekontakte – mit Karte, Farbkategorien und dem Abschnitt **„Stimmung bald fällig“**.
 
@@ -39,3 +39,7 @@ npm test           # Tests für vCard- und NS-Parser
 ```
 
 Für die Installation auf dem Handy muss die App über **HTTPS** erreichbar sein, z. B. mit GitHub Pages: *Settings → Pages → Deploy from a branch* und den Branch mit diesen Dateien wählen.
+
+## Design
+
+Gestaltet nach der Visitenkarte von *Piano Atelier François Rosselet*: Schwarz auf Weiss, Schrift Baskervville (lokal eingebunden unter `fonts/`, SIL Open Font License), Logo (Flügel mit Katze) als Vektorgrafik in `piano.svg`. Dunkelmodus folgt der Systemeinstellung.
