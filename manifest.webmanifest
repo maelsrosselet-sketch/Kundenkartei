@@ -1,0 +1,14 @@
+{
+  "name": "Kundenkartei",
+  "short_name": "Kunden",
+  "description": "Kundenkartei mit Karte, Farbkategorien und fälligen Stimmungen",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#1f4e79",
+  "lang": "de",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

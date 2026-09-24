@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#1f4e79">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kundenkartei">
+  <title>Kundenkartei</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Kundenkartei</h1>
+    <input id="search" type="search" placeholder="Suchen (Name, Ort, Telefon …)" autocomplete="off">
+  </header>
+
+  <div id="colorFilter" class="chips" aria-label="Nach Farbe filtern"></div>
+
+  <main>
+    <!-- Kunden -->
+    <section id="view-list" class="view active">
+      <nav id="sortTabs" class="subtabs" aria-label="Sortierung">
+        <button data-sort="name" class="active">A–Z</button>
+        <button data-sort="lastName">Nachname</button>
+        <button data-sort="city">Ort</button>
+        <button data-sort="postal">PLZ</button>
+        <button data-sort="category">Farbe</button>
+        <button data-sort="ns">Nächste Stimmung</button>
+      </nav>
+      <div id="list" class="list"></div>
+    </section>
+
+    <!-- Stimmung bald fällig -->
+    <section id="view-due" class="view">
+      <div class="panel">
+        <h2>Stimmung bald fällig</h2>
+        <div class="row">
+          <label>Zeitraum
+            <select id="duePeriod">
+              <option value="0">Diesen Monat</option>
+              <option value="1">bis nächsten Monat</option>
+              <option value="2" selected>nächste 3 Monate</option>
+              <option value="5">nächste 6 Monate</option>
+              <option value="11">nächste 12 Monate</option>
+              <option value="custom">Benutzerdefiniert …</option>
+            </select>
+          </label>
+          <label class="check"><input type="checkbox" id="dueOverdue" checked> Überfällige einbeziehen</label>
+        </div>
+        <div id="dueCustom" class="row" hidden>
+          <label>von <input type="month" id="dueFrom"></label>
+          <label>bis <input type="month" id="dueTo"></label>
+        </div>
+        <div class="row">
+          <span id="dueSummary" class="muted"></span>
+          <button id="dueToMap" class="primary">Auf Karte anzeigen</button>
+        </div>
+      </div>
+      <div id="dueList" class="list"></div>
+    </section>
+
+    <!-- Karte -->
+    <section id="view-map" class="view">
+      <div class="panel compact">
+        <div class="seg" id="mapMode">
+          <button data-mode="all" class="active">Alle Kunden</button>
+          <button data-mode="due">Stimmung fällig</button>
+        </div>
+        <span id="mapInfo" class="muted"></span>
+        <button id="geocodeBtn">Adressen verorten</button>
+      </div>
+      <div id="map"></div>
+    </section>
+
+    <!-- Einstellungen -->
+    <section id="view-settings" class="view">
+      <div class="panel">
+        <h2>Kontakte vom Gerät übernehmen</h2>
+        <p class="muted">Browser dürfen das Adressbuch nicht selbstständig mitlesen. Die Kontakte werden deshalb
+          importiert; ein erneuter Import gleicht die Daten ab (Farben bleiben erhalten).</p>
+        <div class="row">
+          <label class="button primary">vCard-Datei (.vcf) importieren
+            <input type="file" id="vcfInput" accept=".vcf,text/vcard,text/x-vcard" multiple hidden>
+          </label>
+          <button id="pickerBtn" hidden>Kontakte auswählen (Android)</button>
+        </div>
+        <label class="check"><input type="checkbox" id="removeMissing"> Beim vCard-Import Kunden entfernen, die in der Datei fehlen</label>
+        <details>
+          <summary>So exportierst du deine Kontakte</summary>
+          <ul>
+            <li><b>iPhone:</b> Kontakte-App → „Listen“ → „Alle Kontakte“ lange drücken → „Exportieren“ → in „Dateien“ sichern, dann hier importieren.</li>
+            <li><b>Android:</b> Kontakte-App → Einstellungen → „Kontakte exportieren“ (.vcf) → hier importieren.</li>
+            <li><b>Google/iCloud am PC:</b> contacts.google.com bzw. icloud.com/contacts → Exportieren als vCard.</li>
+          </ul>
+          <p class="muted">„Kontakte auswählen“ (nur Chrome auf Android) liefert keine Notizen – dort fehlen dann die NS-Angaben.</p>
+        </details>
+        <p id="importResult" class="muted"></p>
+      </div>
+
+      <div class="panel">
+        <h2>Farben / Kategorien</h2>
+        <div id="categoryEditor"></div>
+        <button id="addCategory">+ Kategorie</button>
+      </div>
+
+      <div class="panel">
+        <h2>Daten</h2>
+        <p class="muted" id="dataInfo"></p>
+        <div class="row">
+          <button id="exportBtn">Sicherung herunterladen</button>
+          <label class="button">Sicherung laden
+            <input type="file" id="restoreInput" accept=".json,application/json" hidden>
+          </label>
+          <button id="clearBtn" class="danger">Alles löschen</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-view="list" class="active"><span>👥</span>Kunden</button>
+    <button data-view="due"><span>🎹</span>Stimmung</button>
+    <button data-view="map"><span>🗺️</span>Karte</button>
+    <button data-view="settings"><span>⚙️</span>Import</button>
+  </nav>
+
+  <dialog id="detail"></dialog>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
